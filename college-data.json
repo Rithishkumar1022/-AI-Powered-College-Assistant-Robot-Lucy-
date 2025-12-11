@@ -1,0 +1,148 @@
+{
+    "departments": {
+      "computer science": {
+        "hod": "misses. Elakiya",
+        "faculty": [
+          "Professor - Docter. Seethalakshmi N",
+          "Assistant Professor - Mister. Vimal Raja - Specializes in Cloud Computing",
+          "Assistant Professor - Miss. Revathy R",
+          "Assistant Professor - Mister. John William - Focuses on Software Engineering",
+          "Assistant Professor - Mister. Sivaprakasam - Expert in Cybersecurity",
+          "Assistant Professor - Mister. Thayagarajan - Expert in Cybersecurity",
+          "Assistant Professor - Miss. Malathi - Works on Data Science and Analytics",
+          "Assistant Professor - Miss. Gajalakshimi - Works on Data Science and Analytics",
+          "Assistant Professor - Mister. Balaji",
+          "Assistant Professor - Misses. Divya P",
+          "Assistant Professor - Miss. Srisaranya S"
+        ],
+        "num_students": 300,
+        "mission": [
+          "Encourage interdisciplinary research via Invest in Yourself (IIY)",
+          "Facilitate students in mastering vital software tools to drive ethical innovations."
+        ],
+        "vision": "To be a pioneer department for cultivating tech leaders through innovation and collaboration"
+      },
+      "mechanical engineering": {
+        "hod": "Dr. Michael Red",
+        "faculty": [
+          "Professor - Dr. Mallieswaran - Works on Materials Science",
+          "Professor - Dr. John Baruch - Focuses on Environmental Engineering",
+          "Associate Professor - Docter. Asaithambi - Works on Materials Science",
+          "Associate Professor - Docter. Krishnamoorthy - Works on Materials Science",
+          "Associate Professor - Mister. Panneerselvam - Works on Materials Science",
+          "Assistant Professor - Mr. Murasu - Works on Materials Science",
+          "Assistant Professor - Mr. Velmurugan - Works on Materials Science",
+          "Assistant Professor - Mr. Solomon Durai Raj - Works on Materials Science",
+          "Assistant Professor - Mr. Balachandar - Works on Materials Science",
+          "Assistant Professor - Mr. Vijayabaskar - Works on Materials Science",
+          "Assistant Professor - Mr. Karthikeyan - Works on Materials Science",
+          "Assistant Professor - Mr. George Oliver - Works on Materials Science",
+          "Assistant Professor - Mr. Amudhan - Works on Transportation Engineering"
+        ],
+        "num_students": 150,
+        "mission": [
+          "Empowering students to excel in research and creative endeavours through the Invest in Yourself (IIY) technique.",
+          "Foster an entrepreneurial mindset through a conducive environment that upholds ethical values and addresses societal needs."
+        ],
+        "vision": "To be a distinguished department that meets the evolving societal demands through education, research, and ethical practices."
+      },
+      "civil engineering": {
+        "hod": "Dr. Sakthimurugan",
+        "faculty": [
+          "Associate Professor - Doctor. Padmapriya J - Specializes in Thermodynamics",
+          "Assistant Professor - Mr. Ramamoorthy - Works on Materials Science",
+          "Assistant Professor - Mr. Saravanan - Works on Materials Science",
+          "Assistant Professor - Mr. Manigandan - Works on Materials Science",
+          "Assistant Professor - Mr. Santhoshkumar - Works on Materials Science",
+          "Assistant Professor - Mr. Adhithya Vijay - Works on Materials Science",
+          "Assistant Professor - Mrs. Sumithra - Works on Materials Science",
+          "Assistant Professor - Mr. Shyamkumar - Works on Materials Science",
+          "Assistant Professor - Ms. Sashmitha - Works on Materials Science"
+        ],
+        "num_students": 250,
+        "mission": [
+          "Encourage the students to use creative investigation strategies through Invest in Yourself (IIY) technique.",
+          "Motivating students to embark on entrepreneurial ventures with actively engaging to address societal challenges."
+        ],
+        "vision": "To be a Competent department known for intellectual expertise and be respected as influential leaders"
+      },
+      "Electronics and Communications Engineering": {
+        "hod": "Dr. Arulaalan",
+        "faculty": [
+          "Associate Professor - Dr. Kanimozhi - Works on Materials Science",
+          "Associate Professor - Dr. Selvaganapathi - Focuses on Environmental Engineering",
+          "Assistant Professor - Mr. Prabakaran - Works on Materials Science",
+          "Associate Professor - Mrs. Ezhilarasi - Works on Materials Science",
+          "Assistant Professor - Mrs. Nithya - Works on Materials Science",
+          "Assistant Professor - Mr. Murasu - Works on Materials Science",
+          "Assistant Professor - Mr. Prakash - Works on Materials Science",
+          "Assistant Professor - Mrs. Pallavi - Works on Materials Science",
+          "Assistant Professor - Mr. Kalaivanan - Works on Materials Science",
+          "Assistant Professor - Mrs. Mahalakshmi - Works on Materials Science",
+          "Assistant Professor - Mrs. Baby Joice - Works on Materials Science",
+          "Assistant Professor - Mr. George Oliver - Works on Materials Science",
+          "Assistant Professor - Mrs. Ammu - Works on Transportation Engineering"
+        ],
+        "num_students": 200,
+        "mission": [
+          "Facilitate the students to excel in intellectual abilities through Invest in Yourself (IIY).",
+          "Through IIY, encourage students to drive ethical innovations for societal advancements."
+        ],
+        "vision": "To be recognized as a leading department for moulding intellectual and ethical engineers addressing societal needs"
+      },
+      "electrical and electronics engineering": {
+        "hod": "Dr. Arulvizhi A",
+        "faculty": [
+          "Professor - Dr. Kamalakannan - Works on Materials Science",
+          "Assistant Professor - Dr. Thamizharasan - Works on Materials Science",
+          "Associate Professor - Mrs. Radhika - Works on Materials Science",
+          "Assistant Professor - Mr. Karthick - Works on Materials Science",
+          "Assistant Professor - Mr. Venkatesan - Works on Materials Science",
+          "Assistant Professor - Mr. Devaneyan - Works on Materials Science",
+          "Assistant Professor - Mrs. Siva Ranjani - Works on Materials Science",
+          "Assistant Professor - Mr. Sathis Kumar - Works on Materials Science",
+          "Assistant Professor - Mr. Sreenivasan - Works on Materials Science",
+          "Assistant Professor - Mr. Rajavelu - Works on Materials Science"
+        ],
+        "num_students": 200,
+        "mission": [
+          "Promote research and innovative initiatives by utilizing Invest in Yourself (IIY) technique.",
+          "Through IIY, strengthen the entrepreneurial mindset, and moral principles to benefit society."
+        ],
+        "vision": "To be a competent department addressing evolving industry needs through education and research."
+      },
+      "Artificial Intelligence and Data Science": {
+        "hod": "Doctor. Bharath",
+        "faculty": [
+          "Professor - Doctor. Kamalakannan - Works on Materials Science",
+          "Assistant Professor - Doctor. Thamizharasan - Works on Materials Science",
+          "Associate Professor - Misses. Mullaikodi - Works on Materials Science",
+          "Assistant Professor - Mister. Thiyagarajan - Works on Materials Science",
+          "Assistant Professor - Mister. Rajkamal - Works on Materials Science",
+          "Assistant Professor - Misses. Tamizh Kuzhali - Works on Materials Science",
+          "Assistant Professor - Mister. Kalaiarasan - Works on Materials Science",
+          "Assistant Professor - Mister. Ram Tandan - Works on Materials Science",
+          "Assistant Professor - Miss. Shyamala - Works on Materials Science",
+          "Assistant Professor - Misses. Muthulakshmi - Works on Materials Science"
+        ],
+        "num_students": 200,
+        "mission": [
+          "Facilitate the students with expertise in scientific advancements through Invest in Yourself (IIY) techniques.",
+          "Creating a dynamic environment conducive to ethical innovation, propelling societal progress."
+        ],
+        "vision": "Foster inventive teaching practices to advance technical proficiency in AI and data science"
+      }
+    },
+    "college_info": {
+      "Executive Director": "Ms. Amudhavalli Ranganathan",
+      "principal": "Dr. Saravanan",
+      "vice": "Dr. Arulaalan",
+      "num_departments": 6,
+      "Founder": "CK Ranganathan",
+      "num_students": 1200,
+      "motto": "Empowering Minds, Building Futures",
+      "mission": "To provide world-class education that transforms students into skilled professionals and responsible citizens.",
+      "vision": "To be a globally recognized institution known for excellence in education, research, and societal contribution."
+    }
+  }
+  

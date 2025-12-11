@@ -1,0 +1,250 @@
+import os
+import json
+import speech_recognition as sr  # For speech-to-text
+import pyttsx3  # For text-to-speech
+import nltk
+from nltk.tokenize import word_tokenize
+from transformers import pipeline  # Import Hugging Face pipeline
+from datetime import datetime  # For time-related queries
+import wikipediaapi  # Import Wikipedia API
+
+# Download NLTK data (run once)
+nltk.download('punkt')
+
+# Constants
+AUDIO_DIR = "audio"
+RESPONSE_FILE = os.path.join(AUDIO_DIR, "response.mp3")
+
+# Load college data from JSON file
+with open("college-data.json", "r") as file:
+    college_data = json.load(file)
+
+# Initialize text-to-speech engine
+engine = pyttsx3.init()
+
+# Set female voice (adjust as needed based on your system)
+voices = engine.getProperty('voices')
+female_voice = None
+for voice in voices:
+    if 'female' in voice.name.lower():  # You can modify this check to better suit your needs
+        female_voice = voice
+        break
+
+if female_voice:
+    engine.setProperty('voice', female_voice[2].id)  # Set the female voice
+else:
+    print("Female voice not found, using default voice.")
+
+# Load Hugging Face GPT-2 model (smaller and more efficient than GPT-J)
+generator = pipeline("text-generation", model="distilgpt2")
+
+# Initialize Wikipedia API
+wiki = wikipediaapi.Wikipedia(language="en", user_agent="MyCollegeAssistant/1.0")
+
+# Predefined responses function
+# Predefined responses function
+def predefined_responses(query):
+    """
+    Load predefined responses from the response.json file.
+    """
+    try:
+        with open("response.json", "r") as file:
+            responses = json.load(file)
+    except FileNotFoundError:
+        return "Sorry, I couldn't find the responses file."
+
+    # Replace %TIME% placeholder with the current time
+    time = datetime.now().strftime('%H:%M:%S')
+    responses["what's the time now"] = responses["what's the time now"].replace("%TIME%", time)
+
+    return responses.get(query.lower(), None)
+
+
+def listen_and_recognize():
+    """
+    Listen to the user's voice and convert it to text using SpeechRecognition.
+    """
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        recognizer.adjust_for_ambient_noise(source)  # Adjust for ambient noise
+        audio = recognizer.listen(source)  # Capture audio from the microphone
+
+    try:
+        print("Recognizing...")
+        query = recognizer.recognize_google(audio)  # Use Google Web Speech API
+        print(f"You said: {query}")
+        return query
+    except sr.UnknownValueError:
+        print("Sorry, I could not understand the audio.")
+        return None
+    except sr.RequestError as e:
+        print(f"Could not request results from Google Web Speech API; {e}")
+        return None
+
+def answer_wikipedia_query(query):
+    """
+    Use Wikipedia API to fetch a summary for general fact-based queries.
+    """
+    # Remove common question words like "what is" or "who is" and make query simple
+    formatted_query = query.lower().replace("when was", "").replace("what is", "").replace("who is", "").replace("where is", "").strip()
+
+    # Fetch the page for the formatted query
+    page = wiki.page(formatted_query)
+
+    if page.exists():
+        return page.summary[:300]  # Limit the response to 300 characters
+    else:
+        return "Sorry, I couldn't find any relevant information on Wikipedia."
+
+def answer_college_query(query):
+    """
+    Handle college-specific queries about your institution.
+    """
+    query = query.lower()
+    
+    # Access college-level info from the JSON
+    if "principal" in query:
+        return f"The principal of the college is {college_data['college_info']['principal']}."
+    elif "vice" in query:
+        return f"The vice-principal is {college_data['college_info']['vice']}."
+    elif "founder" in query and "college" in query:
+        return f"The founder of the college is {college_data['college_info']['Founder']}."
+    elif "motto" in query:
+        return f"The college motto is: {college_data['college_info']['motto']}."
+    elif "mission" in query:
+        return f"The mission of the college is: {college_data['college_info']['mission']}."
+    elif "vision" in query:
+        return f"The vision of the college is: {college_data['college_info']['vision']}."
+    
+    # Access department-level info from the JSON
+    for department_name, department_info in college_data['departments'].items():
+        if department_name.lower() in query:
+            return f"The {department_name} department is led by {department_info['hod']}. It has {department_info['num_students']} students."
+    
+    return None  # Return None if no relevant information was found
+def answer_faculty_query(query):
+    """
+    Handle queries about specific faculty members and their areas of expertise.
+    """
+    query = query.lower()
+
+    # Search for faculty members across all departments
+    for department_name, department_info in college_data['departments'].items():
+        for faculty_member in department_info['faculty']:
+            # Check if the faculty member's name is mentioned in the query
+            if faculty_member.lower() in query:
+                # Find the faculty member's specialization or subject area
+                specialization = next((specialization for specialization in faculty_member.lower().split(' - ') if specialization in query), "No specialization mentioned")
+                return f"{faculty_member} specializes in {specialization}."
+
+    return None  # If no faculty member found in the query
+def answer_department_query(query):
+    """
+    Handle department-specific queries.
+    """
+    query = query.lower()
+
+    # Check for department-related queries (e.g., "Which department focuses on Cloud Computing?")
+    for department_name, department_info in college_data['departments'].items():
+        # Check if the department name is mentioned in the query
+        if department_name.lower() in query:
+            # Respond with department head and student count
+            response = f"The {department_name} department is led by {department_info['hod']}. It has {department_info['num_students']} students."
+            
+            # Check for specific specializations within the department
+            if "specializes" in query or "focuses" in query:
+                # Loop through faculty and find the specialties
+                specializations = []
+                for faculty_member in department_info['faculty']:
+                    # Extract faculty specialization info from the query
+                    for specialization in faculty_member.lower().split(' - '):
+                        if any(keyword in query for keyword in ['cloud computing', 'cybersecurity', 'software engineering', 'data science', 'materials science', 'transportation engineering']):
+                            specializations.append(faculty_member)
+                
+                if specializations:
+                    response += " The following faculty members specialize in these areas: " + ", ".join(specializations) + "."
+                else:
+                    response += " No specific specialization mentioned in your query."
+            
+            return response
+
+    return None  # If no department found in the query
+
+
+def process_query(query):
+    """
+    Process the user's query and generate a response.
+    """
+    # First, check for predefined responses
+    predefined_response = predefined_responses(query)
+    if predefined_response:
+        return predefined_response
+
+    # Check if it's a department-related query (e.g., "Which department focuses on Cloud Computing?")
+    department_response = answer_department_query(query)
+    if department_response:
+        return department_response
+
+    # Check if it's a faculty-related query (e.g., "Who specializes in Cloud Computing?")
+    faculty_response = answer_faculty_query(query)
+    if faculty_response:
+        return faculty_response
+
+    # Check if it's a college-specific query (e.g., "founder of the college")
+    college_response = answer_college_query(query)
+    if college_response:
+        return college_response
+    
+    # Check if it's a Wikipedia query (e.g., "founder of Google")
+    wikipedia_response = answer_wikipedia_query(query)
+    if wikipedia_response and wikipedia_response != "Sorry, I couldn't find any relevant information on Wikipedia.":
+        return wikipedia_response
+
+    # If not a predefined or college-related query, use GPT-2 for general queries
+    return answer_general_query(query)
+
+def answer_general_query(query):
+    """
+    Use Hugging Face GPT-2 to answer general queries or fallback to Wikipedia.
+    """
+    try:
+        response = generator(query, 
+                              max_length=50, 
+                              num_return_sequences=1, 
+                              truncation=True,  # Explicit truncation to avoid the warning
+                              pad_token_id=50256)  # Ensure that padding uses the EOS token ID (for GPT-2)
+        return response[0]['generated_text']
+    except Exception as e:
+        return f"Sorry, I couldn't process your request. Error: {e}"
+
+def speak(text):
+    """
+    Convert text to speech using pyttsx3 with a reduced speed.
+    """
+    print(f"Speaking: {text}")
+    engine.setProperty('rate', 150)  # Set the speech rate to a slower speed
+    engine.say(text)
+    engine.runAndWait()
+
+def main():
+    print("College Assistant Robot: Voice Assistant Module")
+    
+    # Special message to guide the user
+    speak("Hello! I am your college assistant. You can ask me about college information or anything else.")
+    
+    while True:
+        # Step 1: Listen and recognize speech
+        query = listen_and_recognize()
+        if query is None:
+            continue  # Skip to the next iteration if no query was recognized
+
+        # Step 2: Process the query
+        response = process_query(query)
+        print(f"Response: {response}")
+
+        # Step 3: Speak the response
+        speak(response)
+
+if __name__ == "__main__":
+    main()
